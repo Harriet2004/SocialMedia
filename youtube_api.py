@@ -1,6 +1,23 @@
 import requests
 import json
 
+# Returns a list of video IDs matching query string
+def get_videos(query, limit:int, key):
+
+    params = {
+        'key': key,
+        'part': 'snippet',
+        'type': 'video',
+        'maxResults':limit,
+        'q':query
+    }
+
+    response = requests.get("https://www.googleapis.com/youtube/v3/search", params=params)
+    data = response.json()
+
+    return [i['id']['videoId'] for i in data['items']]
+
+
 def get_comments(video_id, key):
 
     # init get payload
