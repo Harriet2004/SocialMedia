@@ -6,10 +6,10 @@ import seaborn as sns
 path = 'datasets/youtube/'
 # Creating key, values for each event
 files = {
-    'qatar_world_cup.csv': {'event': 'World Cup', 'year': 2022},
-    'russia_world_cup.csv': {'event': 'World Cup', 'year': 2018},
+  #  'qatar_world_cup.csv': {'event': 'World Cup', 'year': 2022},
+  #  'russia_world_cup.csv': {'event': 'World Cup', 'year': 2018},
     'paris_olympics.csv': {'event': 'Olympics', 'year': 2024},
-    'tokyo_olympics.csv': {'event': 'Olympics', 'year': 2021} 
+  #  'tokyo_olympics.csv': {'event': 'Olympics', 'year': 2021} 
 }
 
 dfs = []
@@ -49,3 +49,30 @@ plt.ylabel("Number of Comments")
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import TweetTokenizer
+from nltk.stem import WordNetLemmatizer
+import re
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+stop_words = set(stopwords.words('english'))
+tokenizer = TweetTokenizer()
+lemmatizer = WordNetLemmatizer()
+
+# Cleaning function
+def clean_text(text):
+    if not isinstance(text, str):
+        return ''
+    text = text.lower()
+    text = re.sub(r"http\S+|www\S+", '', text)  
+    text = re.sub(r"[^a-zA-Z\s]", '', text)    
+    tokens = tokenizer.tokenize(text)
+    tokens = [token.strip() for token in tokens]
+    tokens = [lemmatizer.lemmatize(t) for t in tokens if t not in stop_words and len(t) > 2]
+    return ' '.join(tokens)
+
+# Apply to dataset
+df['clean_text'] = df['text'].apply(clean_text)
