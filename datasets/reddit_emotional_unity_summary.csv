@@ -1,0 +1,3 @@
+Platform,Event,Avg. Sentiment,% Strong Positive (≥ 0.6),% Strong Negative (≤ -0.6)
+Reddit,Olympics,0.11564569192172604,18.2,7.8
+Reddit,World Cup,0.08315129862309824,15.8,8.2
