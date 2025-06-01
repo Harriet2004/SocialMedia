@@ -57,7 +57,8 @@ def get_comments(video_id, key):
                         "author": snippet["authorDisplayName"],
                         "text": snippet["textDisplay"],
                         "timestamp": snippet["publishedAt"],
-                        "likes": snippet["likeCount"]
+                        "likes": snippet["likeCount"],
+                        "parent_id": snippet["parentId"]
                     }
 
                     comment["replies"].append(reply)
